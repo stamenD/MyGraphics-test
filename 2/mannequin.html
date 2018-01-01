@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<script src="three.min.js"></script>
+		<script src="human.js"></script>
+	</head>
+	
+	<body>
+		<h1>"Разфасоване на бут"<br><small>ф.н. 81364 &ndash; група 1 &ndash; Стамен Драгоев</small></h1>
+
+		<script>
+			// нагласяване на цвета и центрирането на текста с имената ви
+			document.getElementsByTagName('h1')[0].style = 'color:white; text-align:center; font-size:1.75em';
+			
+			// рисувателно поле на цял екран
+			renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			renderer.domElement.style = 'width:100%; height:100%; position:fixed; top:0; left:0; z-index:-1;';
+			
+			// сцена и камера
+			scene = new THREE.Scene();
+			camera = new THREE.PerspectiveCamera( 30, window.innerWidth/window.innerHeight, 0.1, 2000 );
+			camera.position.set(0,3,150);
+
+			// светлини
+			var light = new THREE.DirectionalLight('lightblue',0.8);
+			light.position.set(0,1,4);
+			scene.add(light);
+			scene.add( new THREE.AmbientLight('white',0.4) );
+			
+			// функция за анимиране на сцената
+			var t = 0; // време
+			function drawFrame()
+			{
+				requestAnimationFrame( drawFrame );
+				if (animate) animate(t++);
+				renderer.render( scene, camera );
+			}			
+			
+			colors[4] = 'tomato';
+			var бут = формаКрайник([3,30,6,-90,270,1,0.5,0.001]);
+		    бут.position.set(-3,3,0);
+			бут.rotation.set(0,rad(80),rad(95));
+			scene.add(бут);
+			colors[4] = 'white';
+			var брадва2 = формаКрайник([1,15,1,50,20,1,0.2,0.001]);
+			брадва2.rotation.z=rad(110);
+			брадва2.position.set(-7,5,3);
+			scene.add(брадва2);
+			
+			colors[4] = 'gold';
+			var маса = формаКрайник([16,30,16,10,20,1,0.2,0.001]);
+			маса.position.set(0,-13,0);
+			scene.add(маса);
+            colors[4] = 'lightskyblue';
+			// човече
+			манекен1 = мъжествен();
+			манекен1.position.set(-20,0,0);
+			манекен1.scale.set(0.9,0.9,0.9);
+			манекен1.л_крак.врът(10,0,-17);
+			манекен1.л_коляно.врът(0,10,20);
+			манекен1.д_крак.врът(-15,0,10);
+			манекен1.д_коляно.врът(0,20,0);
+			манекен1.врат.врът(20,0,-30);
+			манекен1.л_ръка.врът(-10,-20,-40);
+			манекен1.д_ръка.врът(0,10,-25);
+			манекен1.д_лакът.врът(55,0,-50);
+			манекен1.л_китка.врът(0,0,-50);
+			манекен1.д_китка.врът(0,0,40);
+			манекен1.тяло.врът(10,20,-10);
+			манекен1.таз.врът(0,0,0);
+			манекен1.rotation.y=12;
+			
+			манекен2 = мъжествен();
+			манекен2.position.set(20,0,0);
+			манекен2.scale.set(0.9,0.9,0.9);
+			манекен2.л_крак.врът(10,0,-20);
+			манекен2.л_коляно.врът(0,0,20);
+			манекен2.д_крак.врът(-15,0,8);
+			манекен2.д_коляно.врът(0,20,0);
+			манекен2.врат.врът(20,0,-30);
+			манекен2.л_ръка.врът(-10,-20,-40);
+			манекен2.д_ръка.врът(-10,-20,-40);
+			манекен2.л_китка.врът(0,0,-50);
+			манекен2.д_китка.врът(0,0,-50);
+			манекен2.тяло.врът(0,10,-5);
+			манекен2.таз.врът(0,0,-6);
+			манекен2.rotation.y=-16;
+			// анимация на човечето
+			animate = function (t)
+			{
+				// тук се описват динамичните елементи на позата
+				// като променливата t е номер на кадър, като се
+				// очаква 1 секунда да е приблизително 60 кадъра
+			
+			манекен1.тяло.врът(10,20+5*sin(t),-10);
+			манекен1.врат.врът(0,0,sin(3*t)-15);
+	        манекен1.д_ръка.врът(0,10,-10*sin(t)-10);
+			брадва2.position.set(-4.5+3*sin(t),5+sin(t),3);
+			
+			
+			манекен2.тяло.врът(0,10,-5+2*sin(t));	
+			манекен2.л_китка.врът(0,0,-50+15*sin(t));
+			манекен2.д_китка.врът(0,0,-50+15*sin(t));	
+			манекен2.глава.врът(0,12*cos(t),10*sin(t)-15);
+			манекен2.врат.врът(3*sin(t)-15,0,sin(3*t)-15);
+			манекен2.л_глезен.врът(0,0,-6*sin(t)+2);
+
+			}
+
+			drawFrame();
+		</script>
+	</body>
+</html>
